@@ -15,9 +15,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body
-        className=""
+        className="h-screen w-screen bg-blue-950 "
       >
+        <main className="h-full w-full ">
         {children}
+        </main>
       </body>
     </html>
   );
