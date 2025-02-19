@@ -11,9 +11,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Switch } from "@/components/ui/switch";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdNoteAdd } from "react-icons/md";
 import { Note } from "@/lib/types/note";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import Link from "next/link";
+import NoteCard from "@/ui/cards/NoteCard";
 
 interface CreateNoteFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -39,7 +41,7 @@ const CreateNoteForm: React.FC<CreateNoteFormProps> = ({ onSubmit, isSubmitting 
         name="note"
         placeholder="Nota"
         id="note"
-        className="min-h-8 max-h-16 rounded-sm p-1 bg-slate-200 focus:bg-slate-300"
+        className="min-h-8 max-h-20 rounded-sm p-1 bg-slate-200 focus:bg-slate-300"
         disabled={isSubmitting}
       />
       <div className="flex items-center space-x-2">
@@ -62,19 +64,30 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ onSubmit, isSubmittin
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button>Nova nota</button>
+        <button className="flex bg-slate-900 w-48 h-16 gap-3 rounded-3xl justify-center items-center text-white font-semibold text-xl">
+          adicionar nota
+      <MdNoteAdd size={30} color="white"/>
+        </button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="min-h-[20rem] max-h-[90%] bg-slate-500 border-none">
-        <div>
-          <AlertDialogTitle className="flex justify-between items-center">
-            <p>Crie sua nova nota! 😁</p>
-            <AlertDialogCancel>
-              <MdCancel size={30} />
-            </AlertDialogCancel>
-          </AlertDialogTitle>
-        </div>
-        <CreateNoteForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
-      </AlertDialogContent>
+      <AlertDialogContent className="min-h-[20rem] max-h-[25rem] bg-slate-500 border-none">
+        {isSubmitting ?
+          <div className="h-full w-full flex justify-center items-center">
+            <LoadingSpinner />
+          </div>
+          :        
+          <>
+            <div>
+              <AlertDialogTitle className="flex justify-between items-center">
+                <p>Crie sua nova nota! 😁</p>
+                <AlertDialogCancel className="w-10 h-10 bg-transparent border-none hover:bg-red-300">
+                  <MdCancel />
+                </AlertDialogCancel>
+              </AlertDialogTitle>
+            </div>
+            <CreateNoteForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
+          </>
+        }
+        </AlertDialogContent>
     </AlertDialog>
   );
 };
@@ -102,6 +115,7 @@ const Page: React.FC = () => {
     const formData = new FormData(event.currentTarget);
 
     const newNote: Note = {
+      id: formData.get("_id")?.toString() || "",
       title: formData.get("title")?.toString() || "",
       note: formData.get("note")?.toString() || "",
       actived: formData.get("enable") === "on",
@@ -120,23 +134,30 @@ const Page: React.FC = () => {
 
   //render
   return (
-    <div>
-      {/* Exibe as notas carregadas */}
-      <div>
-        {notes.length > 0 ? (
+    <div className="h-full w-full overflow-hidden">
+      <nav className="h-28  flex justify-between items-center p-6 border-b-2">
+        <Link href={'/'}>
+        <h1 className="text-4xl text-white font-bold">
+          Zephyr
+        </h1>
+        </Link>
+      <CreateNoteModal onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+      </nav>
+      <div className="h-full w-full flex justify-center items-center">
+       {notes.length > 0 ? (
           notes.map((note, index) => (
-            <div key={index}>
-              <h3>{note.title}</h3>
-              <p>{note.note}</p>
-            </div>
+            <NoteCard  note={note} key={index}/> 
           ))
         ) : (
           <LoadingSpinner className="text-white" />
-        )}
+          )
+        }
       </div>
-      <CreateNoteModal onSubmit={handleSubmit} isSubmitting={isSubmitting} />
     </div>
   );
 };
 
 export default Page;
+
+
+
