@@ -10,6 +10,7 @@ import {
   AlertDialogCancel,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+
 import { Switch } from "@/components/ui/switch";
 import { MdCancel, MdNoteAdd } from "react-icons/md";
 import { Note } from "@/lib/types/note";
@@ -113,7 +114,7 @@ const Page: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-
+  
     const newNote: Note = {
       id: formData.get("_id")?.toString() || "",
       title: formData.get("title")?.toString() || "",
@@ -122,6 +123,7 @@ const Page: React.FC = () => {
     };
 
     setIsSubmitting(true);
+    
     try {
       const { data } = await axios.post("api/create", newNote);
       setNotes((prevNotes) => [...prevNotes, data]);
@@ -130,11 +132,23 @@ const Page: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+    
+    const timer = setTimeout(() => {
+      refresh()
+    }, 300);
+
+    return () => clearTimeout(timer);
+
   };
+
+  
+  function refresh() {
+    window.location.reload();
+  }
 
   //render
   return (
-    <div className="h-full w-full overflow-hidden">
+    <div className="h-full w-full overflow-auto no-scrollbar">
       <nav className="h-28  flex justify-between items-center p-6 border-b-2">
         <Link href={'/'}>
         <h1 className="text-4xl text-white font-bold">
@@ -143,15 +157,17 @@ const Page: React.FC = () => {
         </Link>
       <CreateNoteModal onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </nav>
-      <div className="h-full w-full flex justify-center items-center">
-       {notes.length > 0 ? (
+      <div className="h-full w-full flex justify-center p-10">
+        <div className="w-4/5 grid grid-cols-4 gap-6 ">
+        {notes.length > 0 ? (
           notes.map((note, index) => (
-            <NoteCard  note={note} key={index}/> 
-          ))
-        ) : (
-          <LoadingSpinner className="text-white" />
-          )
-        }
+              <NoteCard  note={note} key={index}/> 
+            ))
+          ) : (
+            <LoadingSpinner className="text-white" />
+            )
+          }
+        </div>
       </div>
     </div>
   );
