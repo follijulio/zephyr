@@ -149,7 +149,7 @@ const Page: React.FC = () => {
   //render
   return (
     <div className="h-full w-full overflow-auto no-scrollbar">
-      <nav className="h-28  flex justify-between items-center p-6 border-b-2">
+      <nav className="h-28 flex justify-between items-center p-6 border-b-2">
         <Link href={'/'}>
         <h1 className="text-4xl text-white font-bold">
           Zephyr
@@ -157,14 +157,16 @@ const Page: React.FC = () => {
         </Link>
       <CreateNoteModal onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </nav>
-      <div className="h-full w-full flex justify-center p-10">
+      <div className="h-full w-full flex justify-center p-10 ">
         <div className="w-4/5 grid grid-cols-3 gap-4 justify-between">
         {notes.length > 0 ? (
           notes.map((note, index) => (
               <NoteCard  note={note} key={index}/> 
             ))
           ) : (
+            <div className="w-full h-full flex justify-center items-center bg-red-300">
             <LoadingSpinner className="text-white" />
+            </div>
             )
           }
         </div>
