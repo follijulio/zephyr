@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const newNote = new Note(note, title, actived);
+    const newNote = new Note(note, title, actived, '');
     console.log("Nova nota criada:", newNote);
 
     const controller = new CreateNoteController();

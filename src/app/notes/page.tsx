@@ -158,7 +158,7 @@ const Page: React.FC = () => {
       <CreateNoteModal onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </nav>
       <div className="h-full w-full flex justify-center p-10">
-        <div className="w-4/5 grid grid-cols-4 gap-6 ">
+        <div className="w-4/5 grid grid-cols-3 gap-4 justify-between">
         {notes.length > 0 ? (
           notes.map((note, index) => (
               <NoteCard  note={note} key={index}/> 
