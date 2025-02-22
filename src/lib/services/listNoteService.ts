@@ -9,6 +9,7 @@ class ListNoteService {
     if (!response) {
       return null;
     }
+    
     return response;
   }
 }

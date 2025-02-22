@@ -10,7 +10,9 @@ datasource db {
 model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   email    String @unique
+  name     String
   password String
+  notes    Note[]
 }
 
 model Note {
@@ -18,5 +20,8 @@ model Note {
   note    String
   title   String
   actived Boolean
+  userId  String  @db.ObjectId
+  user    User    @relation(fields: [userId], references: [id])
+
   @@map("Note")
 }
