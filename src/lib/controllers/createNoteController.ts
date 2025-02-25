@@ -5,9 +5,7 @@ export class CreateNoteController {
   async createNote(note: Note) {
     const service = new CreateNoteService();
 
-    console.log("Chamando CreateNoteService...");
     const response = await service.createNote(note);
-    console.log("Resposta do serviço:", response);
 
     return response
       ? {
