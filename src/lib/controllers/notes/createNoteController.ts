@@ -1,5 +1,5 @@
+import CreateNoteService from "@/lib/services/notes/createNoteService";
 import { Note } from "@/lib/types/note";
-import CreateNoteService from "../services/createNoteService";
 
 export class CreateNoteController {
   async createNote(note: Note) {

@@ -17,6 +17,7 @@ const page: React.FC = () => {
     () => {
       async function fetchData() {
         const response = await axios.post(`/api/notes/querie/`, { id: id });
+        console.log(response.data);
         setNote(response.data as Note);
       }
       fetchData();
@@ -44,7 +45,11 @@ const CardNote = ({ note }: { note: Note }) => {
         <h1 className="text-4xl text-white font-bold">
           {note.title}
         </h1>
-        <span className={`h-10 w-10 rounded-full ${note.actived ? "bg-green-500" : "bg-red-500"}`}/>
+        <span
+          className={`h-10 w-10 rounded-full ${note.actived
+            ? "bg-green-500"
+            : "bg-red-500"}`}
+        />
       </header>
       <div className="w-full h-full pt-8">
         <p className="text-white text-lg">

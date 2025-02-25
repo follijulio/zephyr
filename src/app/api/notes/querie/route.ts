@@ -1,4 +1,4 @@
-import QuerieNoteController from "@/lib/controllers/querieNoteController";
+import QuerieNoteController from "@/lib/controllers/notes/querieNoteController";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

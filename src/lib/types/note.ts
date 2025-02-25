@@ -29,7 +29,7 @@ export class Note {
     };
   }
 
-  deserialize(data: Note): Note {
+  static deserialize(data: Note): Note {
     return new Note(data.note, data.title, data.actived, data.userId, data.id);
   }
 }

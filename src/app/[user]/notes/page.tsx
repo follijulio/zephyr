@@ -17,6 +17,7 @@ import { Note } from "@/lib/types/note";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import Link from "next/link";
 import NoteCard from "@/ui/cards/NoteCard";
+import { useParams } from "next/navigation";
 
 interface CreateNoteFormProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -97,35 +98,43 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ onSubmit, isSubmittin
 const Page: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  //! pegando id de usu[á]rio
+  const params = useParams();
+  const id = params.user;
+  console.log("user id:",id)
+
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const { data } = await axios.get("api/list");
+        const { data } = await axios.post("/api/notes/list", {id: id});
         setNotes(data);
       } catch (error) {
         console.error("Erro ao carregar as notas:", error);
       }
+      setIsLoading(false);
     };
     fetchNotes();
-  }, []);
+  }, [id]);
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-  
-    const newNote: Note = {
-      id: formData.get("_id")?.toString() || "",
-      title: formData.get("title")?.toString() || "",
-      note: formData.get("note")?.toString() || "",
-      actived: formData.get("enable") === "on",
-    };
 
+    const newNote = {
+      title: formData.get("title") as string,
+      note: formData.get("note") as string,
+      actived: formData.get("enable") === "on",
+      userId: id,
+    } as Note;
+  
     setIsSubmitting(true);
     
     try {
-      const { data } = await axios.post("api/create", newNote);
+      const { data } = await axios.post("/api/notes/create", newNote);
       setNotes((prevNotes) => [...prevNotes, data]);
     } catch (error) {
       console.error("Erro ao criar nota:", error);
@@ -157,19 +166,24 @@ const Page: React.FC = () => {
         </Link>
       <CreateNoteModal onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </nav>
-      <div className="h-full w-full flex justify-center p-10 ">
-        <div className="w-4/5 grid grid-cols-3 gap-4 justify-between">
+      <div className="h-full w-full flex justify-center p-10">
+        { isLoading ? 
+        <div className="h-full w-full flex justify-center items-center">  
+        <LoadingSpinner color="white" /> 
+        </div>
+        :
+          <div className="w-4/5 grid grid-cols-4 gap-4 justify-between">
         {notes.length > 0 ? (
           notes.map((note, index) => (
-              <NoteCard  note={note} key={index}/> 
-            ))
-          ) : (
-            <div className="w-full h-full flex justify-center items-center bg-red-300">
-            <LoadingSpinner className="text-white" />
-            </div>
-            )
-          }
+            <NoteCard  note={note} key={index}/> 
+          ))
+        ) : (
+          <div>
+            <h1 className="text-white text-2xl font-bold">Nenhuma nota encontrada</h1>
+          </div>
+        )}
         </div>
+      }
       </div>
     </div>
   );

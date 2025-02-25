@@ -1,5 +1,5 @@
 import { Note } from "@/lib/types/note";
-import { prismaClient } from "../prisma/prisma";
+import { prismaClient } from "../../prisma/prisma";
 
 class CreateNoteService {
   async createNote(note: Note) {
@@ -7,6 +7,7 @@ class CreateNoteService {
 
     const response = await prisma.note.create({
       data: {
+        userId: note.userId,
         note: note.note,
         title: note.title,
         actived: note.actived,

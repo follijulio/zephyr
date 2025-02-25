@@ -1,5 +1,5 @@
-import { prismaClient } from "../prisma/prisma";
-import { Note } from "../types/note";
+import { prismaClient } from "../../prisma/prisma";
+import { Note } from "../../types/note";
 
 class QuerieNoteService {
     async querieNote(id: string) {

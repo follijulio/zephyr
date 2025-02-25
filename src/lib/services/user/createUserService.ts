@@ -1,5 +1,5 @@
-import { prismaClient } from "../prisma/prisma";
-import { User } from "../types/user";
+import { prismaClient } from "../../prisma/prisma";
+import { User } from "../../types/user";
 
 class CreateUserService {
   async createUser(user: User) {

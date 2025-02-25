@@ -2,9 +2,10 @@ import { cn } from "@/lib/utils";
 
 interface LoadingSpinnerProps {
   className?: string;
+  color?: string; 
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className, color  }) => {
   return <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -16,6 +17,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className }) => {
     strokeLinecap="round"
     strokeLinejoin="round"
     className={cn("animate-spin", className)}
+    color={`${color}`}
   >
     <path d="M21 12a9 9 0 1 1-6.219-8.56" />
   </svg>;
