@@ -10,10 +10,16 @@ class CreateUserService {
         name: user.name,
         email: user.email,
         password: user.password,
-        id: user.id,
-      },
+        notes: {
+          create: {
+            actived: true,
+            title: "Nota de exemplo",
+            note: "Esta é uma nota de exemplo"
+          }
+        }
+      }
     });
-
+    
     return response;
   }
 }

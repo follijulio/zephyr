@@ -20,7 +20,7 @@ model Note {
   note    String
   title   String
   actived Boolean
-  userId  String  @db.ObjectId
+  userId  String  @db.ObjectId @unique
   user    User    @relation(fields: [userId], references: [id])
 
   @@map("Note")

@@ -3,27 +3,21 @@ import { Note } from "@/lib/types/note";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  try {
-    console.log("Recebendo requisição...");
+  const noteController = new CreateNoteController();
 
-    const { note, title, actived } = await request.json();
-    console.log("Dados recebidos:", { note, title, actived });
+  try {
+    const { note, title, actived, userId } = await request.json();
 
     if (!note || !title || actived === undefined) {
-      console.log("Erro: Campos obrigatórios faltando");
       return NextResponse.json(
         { error: "Note, title, and actived status are required" },
         { status: 400 }
       );
     }
 
-    const newNote = new Note(note, title, actived);
-    console.log("Nova nota criada:", newNote);
+    const newNote = new Note(note, title, actived, userId);
 
-    const controller = new CreateNoteController();
-    const response = await controller.createNote(newNote);
-
-    console.log("Resposta da controller:", response);
+    const response = await noteController.createNote(newNote);
 
     return NextResponse.json(response);
   } catch (error) {
