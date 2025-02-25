@@ -16,7 +16,7 @@ const page: React.FC = () => {
   useEffect(
     () => {
       async function fetchData() {
-        const response = await axios.post(`/api/querie/`, { id: id });
+        const response = await axios.post(`/api/notes/querie/`, { id: id });
         setNote(response.data as Note);
       }
       fetchData();
