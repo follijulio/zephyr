@@ -11,26 +11,30 @@ const page: React.FC = () => {
   const params = useParams();
   const [note, setNote] = useState<Note>();
 
-  const id = params.id;
-
   useEffect(
     () => {
       async function fetchData() {
-        const response = await axios.post(`/api/notes/querie/`, { id: id });
-        console.log(response.data);
+        const response = await axios.post(`/api/notes/querie/`, {
+          userId: params.user,
+          idNote: params.id
+        });
         setNote(response.data as Note);
       }
       fetchData();
     },
-    [id]
+    [params]
   );
-
-  console.log("\n\n\nNOTE " + note);
 
   return (
     <div className="h-screen w-screen overflow-auto no-scrollbar">
       <div className="text-white w-full h-full flex justify-center items-center">
-        {note ? <CardNote note={note} /> : <LoadingSpinner />}
+        {note
+          ? <div className="w-full h-full flex justify-center items-center">
+              <CardNote note={note} />
+            </div>
+          : <div>
+              <LoadingSpinner />
+            </div>}
       </div>
     </div>
   );
@@ -46,9 +50,8 @@ const CardNote = ({ note }: { note: Note }) => {
           {note.title}
         </h1>
         <span
-          className={`h-10 w-10 rounded-full ${note.actived
-            ? "bg-green-500"
-            : "bg-red-500"}`}
+          className={`h-10 w-10 rounded-full
+            ${note.actived ? "bg-green-500" : "bg-red-500"}`}
         />
       </header>
       <div className="w-full h-full pt-8">

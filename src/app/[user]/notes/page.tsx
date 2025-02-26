@@ -103,7 +103,6 @@ const Page: React.FC = () => {
   //! pegando id de usu[á]rio
   const params = useParams();
   const id = params.user;
-  console.log("user id:",id)
 
 
   useEffect(() => {

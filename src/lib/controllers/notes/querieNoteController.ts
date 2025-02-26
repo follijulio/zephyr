@@ -1,10 +1,10 @@
-import QuerieUserController from "../user/querieUserController"; 
-
+import QuerieNoteService from "@/lib/services/notes/querieNoteService";
 
 class QuerieNoteController {
-    async querieNoteController(id: string) {
-        const service = new QuerieUserController();
-        const response = await service.querieUser(id);
+    async querieNoteController(userId: string, idNote: string) {
+        const service = new QuerieNoteService();
+
+        const response = await service.querieNote(userId, idNote);
         return response;
     }
 }

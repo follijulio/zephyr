@@ -2,23 +2,28 @@ import { prismaClient } from "../../prisma/prisma";
 import { Note } from "../../types/note";
 
 class QuerieNoteService {
-    async querieNote(id: string) {
+    async querieNote(userId: string, id: string) {
         const prisma = prismaClient;
 
-        const response = await prisma.note.findUnique({
+        const response = await prisma.user.findUnique({
             where: {
-                id: id,
+                id: userId
+            },
+        }).notes({
+            where: {
+                id: id
             }
         });
 
+        const noteData = response?.[0];
+
         const note = new Note(
-            response?.note ? response?.note : '', 
-            response?.title ?? '', 
-            response?.actived ?? false, 
-            response?.id ?? ''
+            noteData?.note ?? '', 
+            noteData?.title ?? '', 
+            noteData?.actived ?? false, 
+            noteData?.id ?? ''
         );
         
-
 
         return note;
     }

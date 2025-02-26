@@ -10,7 +10,7 @@ const noteCard: React.FC<noteProps> = ({note}) => {
   const route = useRouter();
 
   const handleClick = () => {
-    route.push(`/notes/${note.id}`);
+    route.push(`/${note.userId}/notes/${note.id}`);
   };
   
   return (
