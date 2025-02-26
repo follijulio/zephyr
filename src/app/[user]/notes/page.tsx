@@ -100,7 +100,7 @@ const Page: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  //! pegando id de usu[á]rio
+  //! getting u[s]er id
   const params = useParams();
   const id = params.user;
 
@@ -111,7 +111,7 @@ const Page: React.FC = () => {
         const { data } = await axios.post("/api/notes/list", {id: id});
         setNotes(data);
       } catch (error) {
-        console.error("Erro ao carregar as notas:", error);
+        console.error("Error loading notes:", error);
       }
       setIsLoading(false);
     };
@@ -136,7 +136,7 @@ const Page: React.FC = () => {
       const { data } = await axios.post("/api/notes/create", newNote);
       setNotes((prevNotes) => [...prevNotes, data]);
     } catch (error) {
-      console.error("Erro ao criar nota:", error);
+      console.error("Error creating note:", error);
     } finally {
       setIsSubmitting(false);
     }

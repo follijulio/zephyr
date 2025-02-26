@@ -14,11 +14,16 @@ const page: React.FC = () => {
   useEffect(
     () => {
       async function fetchData() {
-        const response = await axios.post(`/api/notes/querie/`, {
-          userId: params.user,
-          idNote: params.id
-        });
-        setNote(response.data as Note);
+        try {
+          const response = await axios.post(`/api/notes/querie/`, {
+            userId: params.user,
+            idNote: params.id
+          });
+
+          setNote(response.data as Note);
+        } catch (error) {
+          console.error("Error loading note:", error);
+        }
       }
       fetchData();
     },

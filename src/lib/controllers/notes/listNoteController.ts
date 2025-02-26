@@ -6,6 +6,16 @@ export class ListNoteController {
 
     const response = await service.listNote(id);
 
-    return response;
+    return response
+      ? {
+          response: response,
+          situation: true,
+          message: "Notes found"
+        }
+      : {
+          response: null,
+          situation: false,
+          message: "Error to find notes"
+        };
   }
 }

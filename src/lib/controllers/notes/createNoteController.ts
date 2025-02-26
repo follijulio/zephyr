@@ -11,12 +11,12 @@ export class CreateNoteController {
       ? {
           response: response,
           situation: true,
-          message: "Nota criada!"
+          message: "Note created"
         }
       : {
           response: null,
           situation: false,
-          message: "Erro ao criar nota"
+          message: "Erro to create note"
         };
   }
 }

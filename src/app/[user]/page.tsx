@@ -24,7 +24,7 @@ const page: React.FC = () => {
           );
           setUser(newUser);
         } catch (error) {
-          console.error("Erro ao carregar o usu[á]rio:", error);
+          console.error("Error loading u[s]er:", error);
         }
       }
       fetchUser();

@@ -1,5 +1,5 @@
-import { CreateUserService } from "../services/createUserService";
-import { User } from "../types/user";
+import { CreateUserService } from "@/lib/services/user/createUserService";
+import { User } from "@/lib/types/user";
 
 export class CreateUserController {
   async createUser(user: User) {
