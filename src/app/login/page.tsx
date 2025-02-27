@@ -12,31 +12,30 @@ import { useRouter } from "next/navigation";
 
 const Page: React.FC = () => {
   const router = useRouter();
-  
-  const [login, setLogin] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
 
+  const [login, setLogin] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
-    if (login && userId) {
-      router.push(`/${userId}/notes/`);
+    if (login) {
+      router.push(`/`);
     }
-  }, [login, userId, router]);
+  }, [login, router]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
+      // Ajuste a URL se necessário. Aqui estamos chamando /api/auth/login conforme o endpoint revisado.
       const response = await axios.post("/api/user/querie", { email, password });
-
-      setLogin(response.data.situation);
-      setUserId(response.data.response.id);
-
-      console.log(response.data.situation)
-      console.log(response.data.response.id)
       
+      // Verifica se a propriedade "user" está presente na resposta
+      if (response.data.user) {
+        setLogin(true);
+      } else {
+        console.error("Credenciais inválidas");
+      }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     }
@@ -64,7 +63,7 @@ const Page: React.FC = () => {
               type="email"
               className="bg-white"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
             />
           </div>
@@ -76,7 +75,7 @@ const Page: React.FC = () => {
               type="password"
               className="bg-white"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               required
             />
           </div>
