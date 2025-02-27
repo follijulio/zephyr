@@ -1,7 +1,50 @@
+"use client";
+
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { User } from "@/lib/types/user";
+
 const page: React.FC = () => {
+  const params = useParams();
+  const id = params.user;
+  const [user, setUser] = useState<User>();
+
+  useEffect(
+    () => {
+      async function fetchUser() {
+        try {
+          const { data } = await axios.post("/api/user/querie", {id: id});
+          const newUser = new User(
+            data.name,
+            data.email,
+            data.password,
+            data.id
+          );
+          setUser(newUser);
+        } catch (error) {
+          console.error("Error loading u[s]er:", error);
+        }
+      }
+      fetchUser();
+    },
+    [id]
+  );
+
   return (
-    <div className="flex flex-col justify-center items-center text-white text-6xl font-extrabold h-full w-full">
-      Zephyr!
+    <div>
+      <div>
+        {user &&
+          <div>
+            <h1>
+              {user.name}
+            </h1>
+            <p>
+              {user.email}
+            </p>
+          </div>}
+      </div>
     </div>
   );
 };

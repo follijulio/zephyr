@@ -2,12 +2,20 @@ import { prismaClient } from "../../prisma/prisma";
 import { User } from "../../types/user";
 
 class QuerieUserService {
-  async querieUser(id: string) {
+  async querieUser(email: string, password: string) {
     const prisma = prismaClient;
+
     const response = await prisma.user.findUnique({
-      where: { id: id }
+      where: { 
+        email: email,
+        password: password
+       }
     });
 
+    if(!response) {
+      return null;
+    }
+    
     const user = new User(
       response?.name ? response?.name : "",
       response?.email ?? "",
