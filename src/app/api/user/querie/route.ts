@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     }
 
     const controller = new QuerieNoteController();
-    const responseController = await controller.querieUser(email, password);
+    const responseController = await controller.authUser(email, password);
 
     const user = responseController.response ? responseController.response : responseController;
 
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const token = sign(
       { id: responseController.response?.id , email: responseController.response?.email },
       process.env.JWT_SECRET!,
-      { expiresIn: '1h' }
+      { expiresIn: '4h' }
     );
 
     // Serializa o cookie com as configurações de segurança

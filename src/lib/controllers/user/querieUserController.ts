@@ -1,12 +1,18 @@
 import QuerieUserService from "@/lib/services/user/querieUserService";
 
-
-
 class QuerieUserController {
-  async querieUser(email: string, password: string) {
+  async querieUserById(user_id: string) {
     const service = new QuerieUserService();
 
-    const response = await service.querieUser(email, password);
+    const response = await service.querieUserById(user_id);
+
+    return response;
+  }
+
+  async authUser(email: string, password: string) {
+    const service = new QuerieUserService();
+
+    const response = await service.authUser(email, password);
 
     return response
       ? {

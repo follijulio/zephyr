@@ -1,5 +1,12 @@
+import { User } from "./user";
+
+
+
+export class Data {
+    user?: User
+}
 export class Response {
-    response: unknown;
+    response: unknown | Data;
     situation: boolean;
     message: string;
     
