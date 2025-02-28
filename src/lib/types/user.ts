@@ -8,10 +8,10 @@ export class User {
   Notes?: Note[];
 
   constructor(
+    id?: string,
     name: string,
     email: string,
     password: string,
-    id?: string,
     Notes?: Note[]
   ) {
     this.id = id;

@@ -8,31 +8,25 @@ import QuerieUserController from "@/lib/controllers/user/querieUserController";
 export async function GET(request: Request) {
   const cookieHeader = request.headers.get("cookie");
   if (!cookieHeader) {
-    return NextResponse.json(
-      { error: "Nenhum cookie encontrado" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "No cookies found" }, { status: 401 });
   }
-  
+
   const cookies = cookie.parse(cookieHeader);
   const token = cookies.token;
   if (!token) {
-    return NextResponse.json(
-      { error: "Token não encontrado" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Token not found" }, { status: 401 });
   }
-  
+
   let decoded;
   try {
     decoded = verify(token, process.env.JWT_SECRET!);
   } catch (erro) {
     return NextResponse.json(
-      { error: `Token inválido ou expirado ${erro}` },
+      { error: `Invalid or expired token | ERROR: ${erro}` },
       { status: 401 }
     );
   }
-  
+
   const userId = (decoded as JwtPayload).id;
 
   const controller = new QuerieUserController();
@@ -42,16 +36,16 @@ export async function GET(request: Request) {
 
     if (!response) {
       return NextResponse.json(
-        { error: "Usuário não encontrado" },
+        { error: "the user was not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
-    console.error("Erro ao buscar usuário:", error);
+    console.error("Error when searching for user:", error);
     return NextResponse.json(
-      { error: "Erro ao buscar usuário" },
+      { error: "Error when searching for user" },
       { status: 500 }
     );
   }
