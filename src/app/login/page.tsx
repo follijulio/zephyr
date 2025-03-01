@@ -25,7 +25,7 @@ const Page: React.FC = () => {
 
     try {
       // Ajuste a URL se necessário. Aqui estamos chamando /api/auth/login conforme o endpoint revisado.
-      const response = await axios.post("/api/user/querie", { email, password });
+      const response = await axios.post("/api/user/auth", { email, password });
       
       // Verifica se a propriedade "user" está presente na resposta
       if (response.data.user) {

@@ -3,8 +3,10 @@ import { NextResponse } from "next/server";
 import { User } from "@/lib/types/user";
 import { Note } from "@/lib/types/note";
 export async function POST(request: Request) {
+
   const id = "";
   const notes: Note[] = [];
+  
 
   const userController = new CreateUserController();
 
