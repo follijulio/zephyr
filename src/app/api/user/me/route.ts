@@ -1,4 +1,3 @@
-// Exemplo: app/api/user/me/route.ts
 import { NextResponse } from "next/server";
 import { JwtPayload, verify } from "jsonwebtoken";
 import cookie from "cookie";

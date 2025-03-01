@@ -1,4 +1,3 @@
-// app/api/auth/login/route.ts
 import QuerieNoteController from "@/lib/controllers/user/querieUserController";
 import { NextResponse } from "next/server";
 import { sign } from "jsonwebtoken";
@@ -21,7 +20,6 @@ export async function POST(request: Request) {
 
     const user = responseController.response ? responseController.response : responseController;
 
-    // Verifica se o usuário e o id estão definidos
     if (!user) {
       return NextResponse.json(
         { error: "Credenciais inválidas" },
@@ -29,14 +27,12 @@ export async function POST(request: Request) {
       );
     }
 
-    // Cria o token JWT
     const token = sign(
       { id: responseController.response?.id , email: responseController.response?.email },
       process.env.JWT_SECRET!,
       { expiresIn: '4h' }
     );
 
-    // Serializa o cookie com as configurações de segurança
     const serializedCookie = cookie.serialize('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
