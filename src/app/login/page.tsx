@@ -25,7 +25,7 @@ const Page: React.FC = () => {
 
     try {
 
-      const response = await axios.post("/api/user/auth", { email, password });
+      const response = await axios.post("/api/user/auth/login", { email, password });
       
       if (response.data.user) {
         setLogin(true);
