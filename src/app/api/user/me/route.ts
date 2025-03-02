@@ -7,13 +7,13 @@ import QuerieUserController from "@/lib/controllers/user/querieUserController";
 export async function GET(request: Request) {
   const cookieHeader = request.headers.get("cookie");
   if (!cookieHeader) {
-    return NextResponse.json({ error: "No cookies found" }, { status: 401 });
+    return NextResponse.json({ error: "No cookies found" }, { status: 400 });
   }
 
   const cookies = cookie.parse(cookieHeader);
   const token = cookies.token;
   if (!token) {
-    return NextResponse.json({ error: "Token not found" }, { status: 401 });
+    return NextResponse.json({ error: "Token not found" }, { status: 400 });
   }
 
   let decoded;
@@ -22,7 +22,7 @@ export async function GET(request: Request) {
   } catch (erro) {
     return NextResponse.json(
       { error: `Invalid or expired token | ERROR: ${erro}` },
-      { status: 401 }
+      { status: 400 }
     );
   }
 
