@@ -38,7 +38,7 @@ const page: React.FC = () => {
               <CardNote note={note} />
             </div>
           : <div>
-              <LoadingSpinner />
+              <LoadingSpinner color="white" /> 
             </div>}
       </div>
     </div>

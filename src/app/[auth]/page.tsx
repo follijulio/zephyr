@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { User } from "@/lib/types/user";
-import { fetchUser } from "@/lib/fetchdata/fetchData";
+import { fetchUser } from "@/hooks/useFetchData";
 
 
 const Page: React.FC = () => {

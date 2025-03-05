@@ -44,7 +44,6 @@ class QuerieUserService {
       response?.password ?? "",
       response?.id ?? ""
     );
-
     return user;
   }
 }

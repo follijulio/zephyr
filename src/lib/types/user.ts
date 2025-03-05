@@ -1,6 +1,9 @@
 import { Note } from "./note";
 
 export class User {
+  response(response: any) {
+    throw new Error("Method not implemented.");
+  }
   id?: string;
   name: string;
   email: string;
@@ -8,10 +11,10 @@ export class User {
   Notes?: Note[];
 
   constructor(
-    id?: string,
     name: string,
     email: string,
     password: string,
+    id?: string,
     Notes?: Note[]
   ) {
     this.id = id;

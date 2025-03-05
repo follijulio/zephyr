@@ -1,4 +1,4 @@
-    "use client";
+"use client";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,31 +6,42 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Response } from "@/lib/types/response";
 
 const Page: React.FC = () => {
   const router = useRouter();
 
-  const [login, setLogin] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  
+  
+  const [login, setLogin] = useState<boolean>(false);
+  const [textError, setTextError] = useState("");
 
-  useEffect(() => {
-    if (login) {
-      router.push(`/`);
-    }
-  }, [login, router]);
+  useEffect(
+    () => {
+      if (login) {
+        router.push(`/`);
+      }
+    },
+    [login, router]
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-
-      const response = await axios.post("/api/user/auth/login", { email, password });
+      const response = (await axios.post("/api/user/auth/login", {
+        email,
+        password
+      }));
+      const data = response.data.response as Response;
       
-      if (response.data.user) {
+      if (data.situation) {
         setLogin(true);
       } else {
-        console.error("Credenciais inválidas");
+        setTextError("USUÁRIO OU SENHA ICORRETA");
+        console.error();
       }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
@@ -51,6 +62,8 @@ const Page: React.FC = () => {
           onSubmit={handleSubmit}
           className="w-3/4 max-w-[26rem] rounded-xl shadow-2xl shadow-black gap-6 flex flex-col justify-center items-center bg-gradient-to-b from-sky-800 to-blue-950 p-8"
         >
+          {/* TEXTO DE ERRO */}
+          {textError}
           <div className="w-full">
             <Label className="text-white">E-mail</Label>
             <Input

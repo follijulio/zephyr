@@ -2,17 +2,16 @@ import { CreateUserController } from "@/lib/controllers/user/createUserControlle
 import { NextResponse } from "next/server";
 import { User } from "@/lib/types/user";
 import { Note } from "@/lib/types/note";
-export async function POST(request: Request) {
 
+export async function POST(request: Request) {
   const id = "";
   const notes: Note[] = [];
-  
 
   const userController = new CreateUserController();
 
   try {
     const { name, email, password } = await request.json();
-
+    console.log(name, email, password);
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "Name, email and password are required" },
@@ -20,8 +19,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const newUser = new User(id, name, email, password, notes);
-
+    const newUser = new User(name, email, password, id,   notes);
+    console.log(newUser);
     const response = await userController.createUser(newUser);
 
     return NextResponse.json(response);
