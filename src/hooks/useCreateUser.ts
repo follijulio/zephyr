@@ -9,7 +9,6 @@ interface CreateUserProps {
 }
 
 const createUser = async ({ newUser }: CreateUserProps) => {
-    console.log('new User: ', newUser)
     const name = newUser.name
     const email = newUser.email
     const password = newUser.password

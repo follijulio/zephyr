@@ -10,7 +10,6 @@ export const useUserNotes = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string | undefined>();
 
-  // Buscar o usuário
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -26,7 +25,6 @@ export const useUserNotes = () => {
     getUser();
   }, []);
 
-  // Buscar as notas do usuário, assim que o ID estiver disponível
   useEffect(() => {
     if (!userId) return;
     const getNotes = async () => {

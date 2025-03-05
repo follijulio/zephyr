@@ -29,7 +29,7 @@ const Page: React.FC = () => {
 
     try {
       const response = (await createUser({ newUser })) as Response;
-      console.log("Resposta na página:", response);
+
 
       if (response.situation) {
         router.push("/login");

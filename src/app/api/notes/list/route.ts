@@ -6,7 +6,6 @@ export async function POST(request: Request) {
   try {
     const { id } = await request.json();
     const controller = new ListNoteController();
-    console.log("ID API: ", id)
     const response = await controller.listNote(id);
 
     return NextResponse.json(response);

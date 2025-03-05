@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
   try {
     const { name, email, password } = await request.json();
-    console.log(name, email, password);
+  
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "Name, email and password are required" },
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     const newUser = new User(name, email, password, id,   notes);
-    console.log(newUser);
+   
     const response = await userController.createUser(newUser);
 
     return NextResponse.json(response);

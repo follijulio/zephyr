@@ -12,7 +12,6 @@ import { Switch } from "@/components/ui/switch";
 import { Note } from "@/lib/types/note";
 import { useUserNotes } from "@/hooks/useUserNotes";
 
-// Componente de formulário para criar nota
 const CreateNoteForm: React.FC<{ onSubmit: (event: React.FormEvent<HTMLFormElement>) => void; isSubmitting: boolean }> = ({ onSubmit, isSubmitting }) => {
   return (
     <form onSubmit={onSubmit} className="grid grid-rows-4 gap-4 font-normal">
@@ -45,7 +44,6 @@ const CreateNoteForm: React.FC<{ onSubmit: (event: React.FormEvent<HTMLFormEleme
   );
 };
 
-// Componente de modal para criação de nota
 const CreateNoteModal: React.FC<{ onSubmit: (event: React.FormEvent<HTMLFormElement>) => void; isSubmitting: boolean }> = ({ onSubmit, isSubmitting }) => {
   return (
     <AlertDialog>
@@ -111,7 +109,6 @@ const Page: React.FC = () => {
 
     try {
       const { data } = await axios.post("/api/notes/create", newNote);
-      // Atualiza a lista sem recarregar a página
       setNotes((prevNotes) => [...prevNotes, data]);
     } catch (error) {
       console.error("Erro ao criar nota:", error);
